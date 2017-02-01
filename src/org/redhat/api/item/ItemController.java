@@ -1,9 +1,9 @@
 package org.redhat.api.item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,13 +17,15 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class ItemController {
 	
-	@Inject
-	private ItemService itemService;	
 
 	@GET
 	public List<ItemModel> getAllItems() {
 		
-		List<ItemModel> items = itemService.findAll();
+		List<ItemModel> items = new ArrayList<ItemModel>();
+		
+		ItemModel stub = new ItemModel(99, "1992", "mercedes", "e200");
+		items.add(stub);
+		
 		return items;
 	}
 	
@@ -31,22 +33,25 @@ public class ItemController {
 	@Path("/{id}")
 	public ItemModel getItem(@PathParam("id") String id) {
 		
-		ItemModel item = itemService.findById(id);
-		return item;
+		ItemModel stub = new ItemModel(Long.valueOf(id), "1988", "bmw", "e200");
+		
+		return stub;
 	}
 
 	@POST
 	public ItemModel createItem(ItemModel item) {
 		
-		ItemModel savedItem = itemService.createItem(item);
-		return savedItem;
+		ItemModel stub = item;
+		stub.setId(99);
+		
+		return item;
 	}
 	
 	@PUT
 	public ItemModel updateItem(ItemModel item) {
 		
-		ItemModel updatedItem = itemService.updateItem(item);
-		return updatedItem;
+		item.setMake("bmw");
+		return item;
 	}
 	
 	@DELETE
@@ -54,7 +59,7 @@ public class ItemController {
 	public HashMap<String,Boolean> deleteItem(@PathParam("id") String id) {
 		
 		HashMap<String,Boolean> status = new HashMap<String,Boolean>();
-		status.put("isDeleted", itemService.deleteItem(id));
+		status.put("isDeleted", true);
 
 		return status;
 	}
