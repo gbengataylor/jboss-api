@@ -98,5 +98,17 @@ public class ItemModel implements Serializable {
 		return "ItemModel [id=" + id + ", year=" + year + ", make=" + make + ", model=" + model + ", status=" + status
 				+ ", createDate=" + createDate + ", lastUpdateDate=" + lastUpdateDate + "]";
 	}
+	
+	public ItemModel() {
+		
+	}
+
+	public ItemModel(long id, String year, String make, String model) {
+		super();
+		this.id = id;
+		this.year = year;
+		this.make = make;
+		this.model = model;
+	}
 
 }
